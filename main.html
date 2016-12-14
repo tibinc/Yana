@@ -1,0 +1,1494 @@
+<head>
+  <title>maya</title>
+<script type= "text/javascript" src = "countries.js"></script>
+<script type= "text/javascript" src = "disableobject.js"></script>
+
+
+</head>
+
+<body>
+ <div> 
+
+  
+
+ <ul id="top">
+  <li><a class="active" href="/" id="home">Home</a></li>
+<li><a  href="/post" id="post">Speak out</a></li>
+<li><a  href="/host" id="post">Like to host?</a></li>
+<li><a  href="/guest" id="guest">Looking for a host?</a></li>
+<li><a  href="/myAccount" id="myAccount">My Account</a></li>
+<li><a  href="/myInbox" id="myInbox">Inbox</a> <span style="color:rgba(200,100,50,.8);position:relative;left:-8px;" class="notification" id="notification" value="1"><sup>new messages</sup></span></li>
+
+<li><a  href="/chat" id="chat">Chat</a><span style="color:rgba(200,100,50,.8);position:relative;left:-8px;" class="chatnotification" id="chatnotification" value="1"><sup>new messages</sup></span></li>
+
+<li><a  href="/TravelBlogs">Travel Diaries</a></li>
+  <li><a href="mailto:tibinc3@gmail.com" id="contact">Contact us</a></li>
+</ul>
+<p>{{> loginButtons}} </p>
+
+
+{{#each userinfo}}
+
+ <script language="javascript">
+
+
+var newMessages='{{NewMessages}}';
+var newChatMessages='{{NewChatMessages}}';
+console.log(newMessages);
+
+var obj1=document.getElementById('notification');
+var obj2=document.getElementById('chatnotification');
+
+if (newMessages=='true')
+
+{
+console.log(newMessages);
+   obj1.setAttribute('visible','true');
+
+
+}
+else if (newMessages=='false'){
+
+   console.log(newMessages);
+
+
+   obj1.setAttribute('hidden', 'hidden');
+
+
+}
+
+if (newChatMessages=='true')
+
+{
+console.log(newMessages);
+   obj2.setAttribute('visible','true');
+
+
+}
+else if (newChatMessages=='false'){
+
+   console.log(newChatMessages);
+
+
+   obj2.setAttribute('hidden', 'hidden');
+
+
+}
+
+
+ 
+
+ </script>
+{{/each}}
+
+
+</div>
+</body>
+
+
+
+<!--...................................................Home Template...............................................................................-->
+
+
+
+
+<template name="home">
+
+{{#if currentUser}}
+
+{{#each showname}}
+
+<img style="width:70px;height:40px;" src="{{ProfilePic}}">
+
+
+{{/each}}
+
+{{/if}}
+
+
+<h4>Welcome
+
+{{#each showname}}
+
+{{firstName}} {{lastName}} 
+
+
+
+{{/each}}
+
+
+
+to your travel hub</h4>
+
+<p><b>Today's Blog..</b></p>
+
+{{#each todaysblog}}
+
+<p><b>{{Heading}}</b> written by<span style="color:rgba(100,200,100,.5);font-size:15px;position:relative;left:10px;"> {{firstName}} {{lastName}}</span></p>
+<p>{{Blog}}</p>
+
+  <a href="/blogComment" style="color:black;position:relative;left:20px" class="blogcomment">Comment</a>
+
+{{/each}}
+
+
+
+
+
+</template>
+
+
+
+<!--...................................................Post Template...............................................................................-->
+
+
+
+
+<template name="post">
+
+{{#if currentUser}}
+
+{{#each userinfo}}
+
+<img style="width:70px;height:40px;" src="{{ProfilePic}}">
+
+
+{{/each}}
+  <h5>Get connected with lots of travelling freaks</h5>
+
+
+<form>
+<input type="textarea" style="width:200px;height:100px;position:relative;left:100px;display:block;" name="postcontent" placeholder="Express yourself">
+<p><input style="position:relative;left:350px;top:-70px;" type="submit" value="Post"></p>
+</form>
+
+
+{{#each postvalue}}
+
+   <p>{{post}}..by <span style="color:rgba(100,200,100,.5);font-size:15px">{{#each showname}} <a title="view profile" style="color:rgba(100,200,100,.9);font-size:15px" href="/viewOtherProfile" id="viewotherprofile" class="viewOtherProfile">{{firstName}}  {{lastName}}</a>{{/each}}
+
+</span><span style="color:rgba(100,200,100,.4);position:relative;left:10px;">posted on:</span><span style="color:rgba(100,200,100,.5);font-size:15px;position:relative;left:10px;">{{createdAt}}</span></p>
+ 
+
+
+  <a href="/comment" style="color:black;position:relative;left:20px" class="comment">Comment</a>
+
+
+
+<div style="color:rgba(150,200,150,.3);">....................................................................................................................................................................................</div>
+
+{{/each}}
+
+
+
+
+
+
+
+{{else}}
+<p>You must login to your account first. Don't have an account? Please sign up. It takes just a few seconds for you.</p>
+
+
+{{/if}}
+
+</template>
+
+
+
+<!--...................................................Comment Template...............................................................................-->
+
+
+
+<template name="comment">
+
+{{#if currentUser}}
+
+{{#each userinfo}}
+
+<img style="width:70px;height:40px;" src="{{ProfilePic}}">
+
+
+{{/each}}
+
+{{#each postview}}
+
+<p>{{post}}</p>
+
+{{/each}}
+
+ <a href="/post" style="color:rgb(150,220,150);position:relative;left:450px;top:-75px" class="comment">Go back to the discussions</a>
+
+<form>
+<input type="textarea" style="width:200px;height:100px;position:relative;left:100px" name="commentcontent">
+<input class="new-comment" style="position:relative;left:100px" type="submit" value="Comment">
+</form>
+{{#each commentvalue}}
+ 
+   <p>{{comment}}..by <span style="color:rgba(100,200,100,.5);font-size:15px">{{#each showname}}<a style="color:rgba(100,200,100,.9);" href="/viewOtherProfile" class="viewOtherProfile"> {{firstName}}  {{lastName}} </a>{{/each}}</span><span style="color:rgba(100,200,100,.4);position:relative;left:10px;">posted on:</span><span style="color:rgba(100,200,100,.5);font-size:15px;position:relative;left:10px;">{{createdAt}}</span></p>
+
+
+{{/each}}
+{{else}}
+<p>You must login to your account first. Don't have an account? Please sign up. It takes just a few seconds for you.</p>
+
+
+{{/if}}
+
+</template>
+
+
+
+<!--...................................................Host Template...............................................................................-->
+
+
+
+<template name="host">
+
+{{#if currentUser}}
+
+{{#each userinfo}}
+
+<img style="width:70px;height:40px;" src="{{ProfilePic}}">
+
+
+{{/each}}
+
+
+<p>Welcome to the host page of PathBuddy. We are so glad that you made the decision of offering your service to someone in need. Get connected with the current wanderers..and your future buddies..Helping each other..being there for each other..lets fill in those invisible gaps which exist between human beings..</p>
+
+Please fill in the following details and be a PathBuddy host.<br /><br />
+<form id="hostform" style="color:black;background-color:rgba(100,200,100,.8);padding:10px 25px">
+
+<p>Full Name: <input type="text" style="width:200px;" name="fullname" maxlength="30" placeholder="Maximum 30 characters" required></p>
+<p>Address:</p> <p>First Line: <input type="text" style="width:200px;" name="addr_first" maxlength="30" placeholder="Maximum 30 characters" required>
+  Street: <input type="text" style="width:200px;" name="street" maxlength="30" placeholder="Maximum 30 characters" required></p><br />
+
+<p style="position:relative;left:15px">Country:<select id="country" name ="country" required></select>
+State: <select name ="state" id ="state" required></select></p><br />
+ <script language="javascript">
+populateCountries("country", "state");
+ </script>
+
+
+
+<p>Postal Code:<input type="text" style="width:200px;" name="postalcode" maxlength="15" placeholder="Maximum 15 characters" required></p><br />
+<p style="position:relative;left:25px">Mobile:<input type="number" style="width:200px;" name="mobile" maxlength="20" placeholder="Maximum 20 characters" required>
+Email:<input type="email" style="width:200px;" name="email" maxlength="30" placeholder="Maximum 30 characters" required></p><br />
+
+<p>Location of hosting: <input type="text" style="width:200px;" name="location" maxlength="30" placeholder="Maximum 30 characters" required>
+
+Type of Host:<select name="hostType" value="select the type" required>
+<option value="Free">Free hosting</option>
+<option value="PG">Paying guest</option>
+<option value="Lodge">Hotel/Lodge/Resort</option>
+</select>
+</p><br />
+<p>Preferences: <input type="textarea" style="height:75px;width:250px;position:relative;top:20px" name="preferences" placeholder="Write down your preferences and comments."></p><br />
+
+<input class="submit_host" style="background-color:rgba(150,150,130);position:relative;left:350px" type="submit" value="Register">
+
+<input class="clearform" style="background-color:rgba(150,150,130);position:relative;left:350px" type="button" onclick="myFunction()" value="Reset">
+
+
+
+</form>
+
+<script>
+function myFunction()
+{
+ 
+
+document.getElementById("hostform").reset();
+
+}
+</script>
+
+{{else}}
+<p>You must login to your account first. Don't have an account? Please sign up. It takes just a few seconds for you.</p>
+
+
+{{/if}}
+</template>
+
+
+<!--...................................................Guest Template...............................................................................-->
+
+
+
+<template name="guest">
+
+
+
+{{#if currentUser}}
+
+{{#each userinfo}}
+
+<img style="width:70px;height:40px;" src="{{ProfilePic}}">
+
+
+{{/each}}
+
+
+<p>Welcome to the guest page of PathBuddy. Register and get connected with individuals and groups who are ready to host you. By raising a guest request here, your application will be seen by future visitors..Alternatively, you can <a href="/searchHost" style="color:rgb(150,220,150);">Search for available hosts in a place.</a> </p>
+
+Please fill in the following details<br /><br />
+<form id="guestform" style="color:black;background-color:rgba(100,200,100,.8);padding:10px 25px">
+
+<p>Full Name: <input type="text" style="width:200px;" name="fullname" maxlength="30" placeholder="Maximum 30 characters" required></p>
+<p>Address:</p> <p>First Line: <input type="text" style="width:200px;" name="addr_first" maxlength="30" placeholder="Maximum 30 characters" required>
+  Street: <input type="text" style="width:200px;" name="street" maxlength="30" placeholder="Maximum 30 characters" required></p><br />
+
+<p style="position:relative;left:15px">Country:<select id="country" name ="country" required></select>
+State: <select name ="state" id ="state" required></select></p><br />
+ <script language="javascript">
+populateCountries("country", "state");
+ </script>
+
+
+
+<p>Postal Code:<input type="text" style="width:200px;" name="postalcode" maxlength="20" placeholder="Maximum 20 characters" required></p><br />
+<p style="position:relative;left:25px">Mobile:<input type="number" style="width:200px;" name="mobile" maxlength="15" placeholder="Maximum 15 characters" required>
+Email:<input type="email" style="width:200px;" name="email" maxlength="30" placeholder="Maximum 30 characters" required></p><br />
+
+<p>Where do you want to be hosted: <input type="text" style="width:200px;" name="location" maxlength="30" placeholder="Maximum 30 characters" required>
+
+Type of Hosts preferred:<select name="hostType" value="select the type" required>
+<option value="Free">Free hosting</option>
+<option value="PG">Paying guest</option>
+<option value="Lodge">Hotel/Lodge/Resort</option>
+</select>
+</p><br />
+<p>No. of people:<input type="number" style="width:200px;" name="count"  required></p>
+<p>Preferences: <input type="textarea" style="height:75px;width:250px;position:relative;top:20px" name="preferences" placeholder="Write down your preferences and comments."></p><br />
+
+<input class="submit_host" style="background-color:rgba(150,150,130);position:relative;left:350px" type="submit" value="Register">
+<input class="clearform" style="background-color:rgba(150,150,130);position:relative;left:350px" type="button" onclick="myFunction()" value="Reset">
+
+
+
+</form>
+
+<script>
+function myFunction()
+{
+
+
+document.getElementById("guestform").reset();
+
+}
+</script>
+{{else}}
+<p>You must login to your account first. Don't have an account? Please sign up. It takes just a few seconds for you.</p>
+
+{{/if}}
+</template>
+
+
+
+<!--...................................................Searching Host Template...............................................................................-->
+
+
+
+<template name="searchHost">
+
+{{#if currentUser}}
+
+{{#each userinfo}}
+
+<img style="width:70px;height:40px;" src="{{ProfilePic}}">
+
+
+{{/each}}
+<form>
+
+Type the name of the place: <input type="text" style="width:250px;" name="searchplace" maxlength="100" placeholder="Maximum 100 characters" required>
+
+Type of Hosts preferred:<select name="hosttype" value="select the type" required>
+<option value="Free">Free hosting</option>
+<option value="PG">Paying guest</option>
+<option value="Lodge">Hotel/Lodge/Resort</option>
+</select>
+<input class="search_host" style="background-color:rgba(150,150,130);position:relative;left:20px" type="submit" onclick="showtext()" value="Search">
+
+</form><br />
+
+<div id="searchresultlabel" style="display:none;">Search Results:</div>
+<script>
+
+function showtext()
+{
+document.getElementById("searchresultlabel").style.display="block";
+
+document.getElementById("otherhosting").style.display="block";
+
+}
+</script>
+
+
+
+{{#each searchresults}}
+
+
+
+
+<p>Name:<b>{{Name}}</b> Location: <b>{{HostLoc}}</b> <br />Hosting offered:<b>{{HostType}}</b><br /> Mobile:<b>{{Mobile}}</b> <span style="position:relative;left:5px;">Email:<b>{{Email}}</b> <br />Comments:<b>{{Preference}}</b></span>
+
+<a href="/sendEnquiry" class="sendEnquiry" style="color:rgba(100,200,100,.8);position:relative;left:20px;">Send enquiry</a></p><br />
+
+
+{{/each}}
+
+<p id="otherhosting"  style="display:none;"><b>Hosting available in the location other than your preferred option.</b></p>
+
+
+{{#each searchresults2}}
+
+
+
+
+<p>Name:<b>{{Name}}</b> Location: <b>{{HostLoc}}</b> <br />Hosting offered:<b>{{HostType}}</b><br /> Mobile:<b>{{Mobile}}</b> <span style="position:relative;left:5px;">Email:<b>{{Email}}</b> <br />Comments:<b>{{Preference}}</b></span>
+
+<a href="/sendEnquiry" class="sendEnquiry" style="color:rgba(100,200,100,.8);position:relative;left:20px;">Send enquiry</a></p><br />
+
+
+{{/each}}
+
+
+{{else}}
+<p>You must login to your account first. Don't have an account? Please sign up. It takes just a few seconds for you.</p>
+
+{{/if}}
+
+</template>
+
+
+
+<!--...................................................MyAccount Template...............................................................................-->
+
+
+
+
+
+<template name="myAccount">
+{{#if currentUser}}
+
+{{#each showname}}
+
+<img style="width:70px;height:40px;" src="{{ProfilePic}}"><a href="/editProfilePic" class="editprofilepic" style="font-family:Times New Roman;font-size:12px;position:relative;left:5px;">edit Pic</a>
+
+<p>{{firstName}} {{lastName}}</p>
+
+
+<p style="color:rgba(100,200,100,.8);font-family:papyrus">"{{Status}}" <a href="/editStatus" class="editstatus" style="font-family:Times New Roman;font-size:12px;position:relative;left:5px;">edit status</a></p>
+<a href="/viewProfile" class="viewprofile" style="color:green;text-decoration:underline;position:relative;left:25px;">View and edit your profile</a>
+
+
+
+{{/each}}
+
+<a href="/createProfile" class="createprofile" id="createprofile" style="color:green;text-decoration:underline;position:relative;left:35px;">Create your PathBuddy profile</a>
+
+{{#each showname}}
+
+ <script language="javascript">
+
+var obj=document.getElementById('createprofile');
+disableobject(obj);
+
+ </script>
+{{/each}}
+
+<h3 style="color:rgba(100,200,100,.8);text-decoration:underline;">My recent posts..</h3>
+
+{{#each myposts}}
+<p style="color:rgba(100,200,100,.8)">{{post}} <span style="color:rgba(100,200,100,.4);">posted on</span> <span style="color:rgba(100,200,100,.5);font-size:15px">{{createdAt}}</span></p>
+
+<a href="/comment" class="viewcomments" style="position:relative;left:10px;">View comments</a>  <a href="#" class="deletepost" style="position:relative;left:30px;">Delete Post</a>
+{{/each}}<br />
+
+<p><a  title="View all your posts" href="/allPosts" style="text-decoration:underline;position:relative;left:25px;"> View all your posts</a></p>
+
+
+<h3 style="color:rgba(100,200,100,.8);text-decoration:underline;">My host locations..</h3>
+
+<p>You are a PathBuddy host in following locations:</p>
+
+{{#each myHostLoc}}
+
+<p style="color: green"><b>{{HostLoc}}</b>  <span style="color:green;position:relative;left:15px;">Type of hosting offered:</span><span style="color:green;position:relative;left:18px;"><b>{{HostType}}</b></span> </p>
+
+<a href="/viewHost" class="viewhost" style="color:rgba(100,200,100,.8)">View and edit the host profile</a>
+<span style="position:relative;left:25px;"><a href="/viewMatchingRequests" class="viewmatchingrequests" style="color:rgba(100,200,100,.8)">View matching Requests</a></span>
+
+
+{{/each}}
+<h3 style="color:rgba(100,200,100,.8);text-decoration:underline;">My requests..</h3>
+
+<p>You raised Guest requests for the following locations:</p>
+{{#each myGuestLoc}}
+<p style="color: green;"><b>{{HostLoc}}</b>     <span style="color: green;position:relative;left:15px;">No. of people:</span><span style="color: green;position:relative;left:15px;"><b>{{Count}}</b></span> <span style="color: green;position:relative;left:25px;">Type of hosting looking for:</span><span style="color: green;position:relative;left:28px;"><b>{{HostType}}</b></span><span style="color: rgba(100,200,100,.4);;position:relative;left:35px;">Raised on:</span><span style="color: rgba(100,200,100,.5);font-size:15px;position:relative;left:35px;">{{createdAt}}</span> </p>
+
+<a href="/viewGuest" class="viewguest" style="color:rgba(100,200,100,.8)">View and edit the request</a>
+<span style="position:relative;left:25px;"><a href="/viewRequestResults" class="viewrequestresults" style="color:rgba(100,200,100,.8)">View matching hosts</a></span>
+
+{{/each}}
+<h3 style="color:rgba(100,200,100,.8);text-decoration:underline;">My Blogs..</h3>
+{{#each myBlogs}}
+<p><b>{{Heading}}</b> written by<span style="color:rgba(100,200,100,.5);font-size:15px;position:relative;left:10px;"> {{firstName}} {{lastName}}</span></p>
+<p>{{Blog}}</p>
+
+ <a href="/blogComment" style="color:black;position:relative;left:20px" class="blogcomment">View Comments</a>
+
+<a href="#" class="deleteblog" style="color:rgba(100,200,100,.8);position:relative;left:30px;">Delete Blog</a>
+
+{{/each}}
+
+<h3 style="color:rgba(100,200,100,.8);text-decoration:underline;">My Recent Comments..</h3>
+
+{{#each myComments}}
+<p>You commented on {{#each myCommentPost}} {{#each myCommentPostOwner}}<span style="color:rgba(100,200,100,.5);font-size:15px;position:relative;left:10px;"><a style="color:rgba(100,200,100,.5);font-size:15px;" title="view profile" href="/viewOtherProfile" id="viewotherprofile" class="viewOtherProfile">{{firstName}} {{lastName}} 's</a></span>{{/each}} <span style="position:relative;left:15px;"> post</span><span style="color:lightgreen;position:relative;left:30px;"><a class="viewconversation" title="view full conversation" href="/comment" style="color:lightgreen;"> {{post}}</a></span>{{/each}}<span style="position:relative;left:60px;">your comment:</span> <span style="color:lightgreen;position:relative;left:60px;">{{comment}}</span><a href="#" class="deletecomment" style="color:rgba(100,200,100,.8);position:relative;left:90px;">Delete Comment</a>
+ </p>
+
+{{/each}}
+<a  title="view all comments" href="/allComments" style="text-decoration:underline;"> View all your comments</a>
+{{else}}
+<p>You must login to your account first. Don't have an account? Please sign up. It takes just a few seconds for you.</p>
+
+{{/if}}
+</template>
+
+
+
+<!--...................................................Edit Status Template......................................................................................................-->
+
+
+
+<template name="editStatus">
+{{#if currentUser}}
+
+{{#each userinfo}}
+
+<img style="width:70px;height:40px;" src="{{ProfilePic}}">
+
+
+{{/each}}
+
+{{#each editStatus}}
+
+<form id="statusform">
+<p>Set your status: <input type="textarea" style="height:75px;width:250px;position:relative;top:20px" name="status" value={{this.Status}}  placeholder="Set your status message."></p><br />
+
+<input class="submit_profile" style="background-color:rgba(150,150,130);position:relative;left:350px" type="submit" value="Save">
+
+<input class="clearform" style="background-color:rgba(150,150,130);position:relative;left:350px" type="button" onclick="myFunction()" value="Reset">
+
+
+</form>
+
+<script>
+function myFunction()
+{
+ 
+
+document.getElementById("statusform").reset();
+
+}
+</script>
+
+{{/each}}
+{{else}}
+<p>You must login to your account first. Don't have an account? Please sign up. It takes just a few seconds for you.</p>
+
+{{/if}}
+</template>
+
+
+
+<!--.................................................Edit Profile Pic Template....................................................................................................-->
+
+
+
+<template name="editProfilePic">
+{{#if currentUser}}
+{{#each userinfo}}
+
+<img style="width:70px;height:40px;" src="{{ProfilePic}}">
+
+
+{{/each}}
+
+<form id="editpicform" action="form_action.asp" accept="image/gif,image/jpeg" style="color:black;background-color:rgba(100,200,100,.8);padding:10px 25px">
+
+<p>Choose your pic:  <input type="file" name="profilepic" maxsize="200x200px" id="profilepic"></p><br />
+
+<input class="save_pic" style="background-color:rgba(150,150,130);position:relative;left:350px" type="submit" value="Save">
+
+</form>
+
+
+
+{{else}}
+<p>You must login to your account first. Don't have an account? Please sign up. It takes just a few seconds for you.</p>
+
+{{/if}}
+</template>
+
+
+
+<!--........................................View All My  Comments Template......................................................................................................-->
+
+
+<template name="allComments">
+
+{{#if currentUser}}
+
+{{#each userinfo}}
+
+<img style="width:70px;height:40px;" src="{{ProfilePic}}">
+
+
+{{/each}}
+
+{{#each myComments}}
+<p>You commented on {{#each myCommentPost}} {{#each myCommentPostOwner}}<span style="color:rgba(100,200,100,.5);font-size:15px;position:relative;left:10px;">{{firstName}} {{lastName}} 's</span>{{/each}} <span style="position:relative;left:10px;"> post</span><span style="color:lightgreen;position:relative;left:30px;">{{post}}<a class="viewconversation" title="view full conversation" href="/comment" style="text-decoration:underline;"> view</a></span>{{/each}}<span style="position:relative;left:60px;">your comment:</span> <span style="color:lightgreen;position:relative;left:60px;">{{comment}}</span><a href="#" class="deletecomment" style="color:rgba(100,200,100,.8);position:relative;left:90px;">Delete Comment</a>
+ </p>
+
+{{/each}}
+
+{{else}}
+<p>You must login to your account first. Don't have an account? Please sign up. It takes just a few seconds for you.</p>
+
+{{/if}}
+
+</template>
+
+
+<!--...........................................View All My Posts Template......................................................................................................-->
+
+
+
+<template name="allPosts">
+{{#if currentUser}}
+{{#each userinfo}}
+
+<img style="width:70px;height:40px;" src="{{ProfilePic}}">
+
+
+{{/each}}
+
+{{#each myposts}}
+<p style="color:rgba(100,200,100,.8)">{{post}} <span style="color:rgba(100,200,100,.4);">posted on</span> <span style="color:rgba(100,200,100,.5);font-size:15px">{{createdAt}}</span></p>
+
+<a href="/comment" class="viewcomments" style="position:relative;left:10px;">View comments</a>  <a href="#" class="deletepost" style="position:relative;left:30px;">Delete Post</a>
+{{/each}}
+{{else}}
+<p>You must login to your account first. Don't have an account? Please sign up. It takes just a few seconds for you.</p>
+
+{{/if}}
+
+
+</template>
+
+
+
+
+
+<!--...................................................View Host Template......................................................................................................-->
+
+
+
+
+<template name="viewHost">
+
+
+{{#if currentUser}}
+
+{{#each userinfo}}
+
+<img style="width:70px;height:40px;" src="{{ProfilePic}}">
+
+
+{{/each}}
+
+<p>Welcome to the host page of PathBuddy.</p>
+
+{{#each viewHost}}
+
+<form id="edithost" style="color:black;background-color:rgba(100,200,100,.8);padding:10px 25px">
+
+<p>Full Name: <input type="text" style="width:200px;" name="fullname" value={{this.Name}} maxlength="30" placeholder="Maximum 30 characters" required></p>
+<p>Address:</p> <p>First Line: <input type="text" style="width:200px;" name="addr_first" value={{this.Address}} maxlength="30" placeholder="Maximum 30 characters" required>
+  Street: <input type="text" style="width:200px;" name="street" value={{this.Street}} maxlength="30" placeholder="Maximum 30 characters" required></p><br />
+
+<p style="position:relative;left:15px">Country:<input type="text" id="country" name ="country" value={{this.Country}} required>
+State: <input type="text" name ="state" value={{this.State}} id ="state" required></p><br />
+
+
+
+
+
+
+<p>Postal Code:<input type="text" style="width:200px;" name="postalcode" value={{this.Post}} maxlength="15" placeholder="Maximum 15 characters" required></p><br />
+<p style="position:relative;left:25px">Mobile:<input type="number" style="width:200px;" name="mobile" value={{this.Mobile}} maxlength="20" placeholder="Maximum 20 characters" required>
+Email:<input type="email" style="width:200px;" name="email" value={{this.Email}} maxlength="30" placeholder="Maximum 30 characters" required></p><br />
+
+<p>Location of hosting: <input type="text" style="width:200px;" name="location" value={{this.HostLoc}} maxlength="30" placeholder="Maximum 30 characters" required>
+
+Type of Host:<select name="hostType" value={{this.HostType}} required>
+<option value="Free">Free hosting</option>
+<option value="PG">Paying guest</option>
+<option value="Lodge">Hotel/Lodge/Resort</option>
+</select>
+</p><br />
+<p>Preferences: <input type="textarea" style="height:75px;width:250px;position:relative;top:20px" name="preferences" value={{this.Preference}} placeholder="Write down your preferences and comments."></p><br />
+
+<input class="submit_changes" style="background-color:rgba(150,150,130);position:relative;left:350px" type="submit" value="Save">
+
+<input class="clearform" style="background-color:rgba(150,150,130);position:relative;left:350px" type="button" onclick="myFunction()" value="Reset">
+
+
+
+</form>
+
+<script>
+function myFunction()
+{
+ 
+
+document.getElementById("edithost").reset();
+
+}
+</script>
+{{/each}}
+{{else}}
+<p>You must login to your account first. Don't have an account? Please sign up. It takes just a few seconds for you.</p>
+
+
+{{/if}}
+
+
+</template>
+
+
+<!--...................................................View Guest Template......................................................................................................-->
+
+
+
+<template name="viewGuest">
+
+
+{{#if currentUser}}
+
+{{#each userinfo}}
+
+<img style="width:70px;height:40px;" src="{{ProfilePic}}">
+
+
+{{/each}}
+
+<p>View and update your request.</p>
+
+{{#each viewGuest}}
+
+<form id="editguest" style="color:black;background-color:rgba(100,200,100,.8);padding:10px 25px">
+
+<p>Full Name: <input type="text" style="width:200px;" name="fullname" value={{this.Name}} maxlength="30" placeholder="Maximum 30 characters" required></p>
+
+<p>Address:</p> <p>First Line: <input type="text" style="width:200px;" name="addr_first" value={{this.Address}} maxlength="30" placeholder="Maximum 30 characters" required>
+  Street: <input type="text" style="width:200px;" name="street" value={{this.Street}} maxlength="30" placeholder="Maximum 30 characters" required></p><br />
+
+<p style="position:relative;left:15px">Country:<input type="text" id="country" name ="country" value={{this.Country}} required>
+State: <input type="text" name ="state" value={{this.State}} id ="state" required></p><br />
+
+
+<p>Postal Code:<input type="text" style="width:200px;" name="postalcode" value={{this.Post}} maxlength="15" placeholder="Maximum 15 characters" required></p><br />
+<p style="position:relative;left:25px">Mobile:<input type="number" style="width:200px;" name="mobile" value={{this.Mobile}} maxlength="20" placeholder="Maximum 20 characters" required>
+Email:<input type="email" style="width:200px;" name="email" value={{this.Email}} maxlength="30" placeholder="Maximum 30 characters" required></p><br />
+
+<p>Where do you want to be hosted:: <input type="text" style="width:200px;" name="location" value={{this.HostLoc}} maxlength="30" placeholder="Maximum 30 characters" required>
+
+Type of Host:<select name="hostType" value={{this.HostType}} required>
+<option value="Free">Free hosting</option>
+<option value="PG">Paying guest</option>
+<option value="Lodge">Hotel/Lodge/Resort</option>
+</select>
+</p><br />
+<p>No. of people:<input type="number" style="width:200px;" name="count" value={{this.Count}}  required></p>
+
+<p>Preferences: <input type="textarea" style="height:75px;width:250px;position:relative;top:20px" name="preferences" value={{this.Preference}} placeholder="Write down your preferences and comments."></p><br />
+
+<input class="submit_changes" style="background-color:rgba(150,150,130);position:relative;left:350px" type="submit" value="Save">
+
+<input class="clearform" style="background-color:rgba(150,150,130);position:relative;left:350px" type="button" onclick="myFunction()" value="Reset">
+
+
+
+</form>
+
+<script>
+function myFunction()
+{
+ 
+
+document.getElementById("editguest").reset();
+
+}
+</script>
+{{/each}}
+{{else}}
+<p>You must login to your account first. Don't have an account? Please sign up. It takes just a few seconds for you.</p>
+
+
+{{/if}}
+
+
+</template>
+
+
+
+<!--.................................................Create Profile Template......................................................................................................-->
+
+
+
+<template name="createProfile">
+{{#if currentUser}}
+<p>Create your PathBuddy profile here</p>
+
+Please fill in the following details<br /><br />
+<form id="createprofile" action="form_action.asp" accept="image/gif,image/jpeg" style="color:black;background-color:rgba(100,200,100,.8);padding:10px 25px">
+
+<p>First Name: <input type="text" style="width:200px;" name="firstname"  maxlength="30" placeholder="Maximum 30 characters" required></p>
+<p>Last Name: <input type="text" style="width:200px;" name="lastname"  maxlength="30" placeholder="Maximum 30 characters" required></p>
+
+
+<p>Address:</p> <p>First Line: <input type="text" style="width:200px;" name="addr_first"  maxlength="30" placeholder="Maximum 30 characters" required>
+  Street: <input type="text" style="width:200px;" name="street" maxlength="30" placeholder="Maximum 30 characters" required></p><br />
+
+<p style="position:relative;left:15px">Country:<select id="country" name ="country" required></select>
+State: <select name ="state" id ="state" required></select></p><br />
+ <script language="javascript">
+populateCountries("country", "state");
+ </script>
+
+
+<p>Postal Code:<input type="text" style="width:200px;" name="postalcode"  maxlength="15" placeholder="Maximum 15 characters" required></p><br />
+<p style="position:relative;left:25px">Mobile:<input type="number" style="width:200px;" name="mobile"  maxlength="20" placeholder="Maximum 20 characters" required>
+Email:<input type="email" style="width:200px;" name="email"  maxlength="30" placeholder="Maximum 30 characters" required></p><br />
+
+<br />
+
+
+<p>Status message: <input type="textarea" style="height:75px;width:250px;position:relative;top:20px" name="status"  placeholder="Set your status message."></p><br />
+
+<p>Upload your profile pic: <input type="file" name="profilepic" maxsize="200x200px" id="profilepic"></p><br />
+
+<input class="submit_profile" style="background-color:rgba(150,150,130);position:relative;left:350px" type="submit" value="Save">
+
+
+<input class="clearform" style="background-color:rgba(150,150,130);position:relative;left:350px" type="button" onclick="myFunction()" value="Reset">
+
+
+
+</form>
+
+<script>
+function myFunction()
+{
+ 
+
+document.getElementById("createprofile").reset();
+
+}
+</script>
+{{else}}
+<p>You must login to your account first. Don't have an account? Please sign up. It takes just a few seconds for you.</p>
+
+{{/if}}
+
+</template>
+
+
+
+<!--..........................................View and Edit Profile Template......................................................................................................-->
+
+
+
+<template name="viewProfile">
+{{#if currentUser}}
+
+
+{{#each viewProfile}}
+
+
+
+<img style="width:70px;height:40px;" src="{{ProfilePic}}">
+
+
+
+
+<form id="editprofile" action="form_action.asp" accept="image/gif,image/jpeg" style="color:black;background-color:rgba(100,200,100,.8);padding:10px 25px">
+
+<p>First Name: <input type="text" style="width:200px;" name="firstname" value={{this.firstName}} maxlength="30" placeholder="Maximum 30 characters" required></p>
+<p>Last Name: <input type="text" style="width:200px;" name="lastname" value={{this.lastName}} maxlength="30" placeholder="Maximum 30 characters" required></p>
+
+
+<p>Address:</p> <p>First Line: <input type="text" style="width:200px;" name="addr_first" value={{this.Address}} maxlength="30" placeholder="Maximum 30 characters" required>
+  Street: <input type="text" style="width:200px;" name="street" value={{this.Street}} maxlength="30" placeholder="Maximum 30 characters" required></p><br />
+
+<p style="position:relative;left:15px">Country:<input type="text" id="country" name ="country" value={{this.Country}} required>
+State: <input type="text" name ="state" value={{this.State}} id ="state" required></p><br />
+
+
+<p>Postal Code:<input type="text" style="width:200px;" name="postalcode" value={{this.Post}} maxlength="15" placeholder="Maximum 15 characters" required></p><br />
+<p style="position:relative;left:25px">Mobile:<input type="number" style="width:200px;" name="mobile" value={{this.Mobile}} maxlength="20" placeholder="Maximum 20 characters" required>
+Email:<input type="email" style="width:200px;" name="email" value={{this.Email}} maxlength="30" placeholder="Maximum 30 characters" required></p><br />
+
+<br />
+
+
+<p>Status message: <input type="textarea" style="height:75px;width:250px;position:relative;top:20px" name="status" value={{this.Status}} placeholder="Set your status message."></p><br />
+<p>Upload your profile pic: <input type="file" name="profilepic" maxsize="200x200px" id="profilepic"></p><br />
+
+<input class="submit_profile" style="background-color:rgba(150,150,130);position:relative;left:350px" type="submit" value="Save">
+
+
+<input class="clearform" style="background-color:rgba(150,150,130);position:relative;left:350px" type="button" onclick="myFunction()" value="Reset">
+
+
+
+</form>
+
+<script>
+function myFunction()
+{
+ 
+
+document.getElementById("editprofile").reset();
+
+}
+</script>
+
+{{/each}}
+{{else}}
+<p>You must login to your account first. Don't have an account? Please sign up. It takes just a few seconds for you.</p>
+
+
+{{/if}}
+
+
+</template>
+
+
+<!--..................................View Guest Request Results Template......................................................................................................-->
+
+
+
+<template name="viewRequestResults">
+{{#if currentUser}}
+
+{{#each userinfo}}
+
+<img style="width:70px;height:40px;" src="{{ProfilePic}}">
+
+
+{{/each}}
+<p>We found following PathBuddy hosts matching your request:</p>
+
+{{#each viewResult}}
+<p>Name:<b>{{Name}}</b> Location: <b>{{HostLoc}}</b> <br />Hosting offered:<b>{{HostType}}</b><br /> Mobile:<b>{{Mobile}}</b> <span style="position:relative;left:5px;">Email:<b>{{Email}}</b> <br />Comments:<b>{{Preference}}</b></span>
+
+<a href="/sendEnquiry" class="sendEnquiry" style="color:rgba(100,200,100,.8);position:relative;left:20px;">Send enquiry</a></p><br />
+{{/each}}
+
+
+{{else}}
+<p>You must login to your account first. Don't have an account? Please sign up. It takes just a few seconds for you.</p>
+
+
+{{/if}}
+</template>
+
+
+<!--...........................................viewMatchingRequests Template.................................................................................................-->
+
+
+
+<template name="viewMatchingRequests">
+{{#if currentUser}}
+
+{{#each userinfo}}
+
+<img style="width:70px;height:40px;" src="{{ProfilePic}}">
+
+
+{{/each}}
+
+<p>We found following Requests matching your Host location:</p>
+
+{{#each viewResult}}
+<p>Name:<b>{{Name}}</b> Location: <b>{{HostLoc}}</b> <br />Preferred Hosting:<b>{{HostType}}</b><br /> Mobile:<b>{{Mobile}}</b> <span style="position:relative;left:5px;">Email:<b>{{Email}}</b> <br />Comments:<b>{{Preference}}</b></span><br />
+<a href="/sendEnquiry" class="sendEnquiry" style="color:rgba(100,200,100,.8);position:relative;left:20px;">Send enquiry</a></p>
+
+{{/each}}
+
+
+{{else}}
+<p>You must login to your account first. Don't have an account? Please sign up. It takes just a few seconds for you.</p>
+
+
+{{/if}}
+</template>
+
+
+<!--..............................................Send Enquiry Template......................................................................................................-->
+
+
+
+<template name="sendEnquiry">
+{{#if currentUser}}
+
+
+{{#each userinfo}}
+
+<img style="width:70px;height:40px;" src="{{ProfilePic}}">
+
+
+{{/each}}
+
+<p>Send a message</p>
+<form>
+<input type="textarea" style="height:75px;width:250px;position:relative;top:20px" name="enquirymessage" placeholder="Write your enquiry message.">
+<input class="send_enquiry" style="background-color:rgba(150,150,130);position:relative;left:30px;top:20px;" type="submit" value="Send">
+
+</form>
+
+{{else}}
+<p>You must login to your account first. Don't have an account? Please sign up. It takes just a few seconds for you.</p>
+{{/if}}
+</template>
+
+
+
+
+<!--.....................................................Inbox Template......................................................................................................-->
+
+
+
+<template name="myInbox">
+
+{{#if currentUser}}
+
+{{#each userinfo}}
+
+<img style="width:70px;height:40px;" src="{{ProfilePic}}">
+
+
+{{/each}}
+
+
+<p style="text-decoration:underline;"><b>Inbox</b></p>
+{{#each viewMessages}}
+<p><span style="color:black;">{{Message}}</span> <span style="color:rgba(100,200,100,.5);"> Sent by:{{#each viewSender}}<a href="/viewOtherProfile" class="viewOtherProfile"> {{firstName}} {{lastName}}</a>  <a href="/sendEnquiry" class="sendEnquiry" style="color:rgba(100,200,100,.8);position:relative;left:10px;">Reply</a>
+{{/each}}</span>
+
+ <span style="color:rgba(150,200,150,.5);position:relative;left:20px;">Sent on:{{TimeStamp}}</span></p><br />
+
+<div style="color:rgba(150,200,150,.3);">....................................................................................................................................................................................</div>
+
+
+
+{{/each}}
+<br />
+<p style="text-decoration:underline;"><b>Sent Messages</b></p>
+
+{{#each sentMessages}}
+
+<p><span style="color:black;">{{Message}}</span> <span style="color:rgba(100,200,100,.5);"> Sent to:{{#each viewReceiver}}<a href="/viewOtherProfile" class="viewOtherProfile"> {{firstName}} {{lastName}}</a>{{/each}}</span>
+
+
+ <span style="color:rgba(150,200,150,.5);position:relative;left:20px;">Sent on:{{TimeStamp}}</span></p><br />
+
+<div style="color:rgba(150,200,150,.3);">....................................................................................................................................................................................</div>
+
+
+
+
+
+{{/each}}
+
+
+
+
+{{else}}
+<p>You must login to your account first. Don't have an account? Please sign up. It takes just a few seconds for you.</p>
+
+
+{{/if}}
+
+</template>
+
+
+
+<!--.........................................View Other's Profile Template......................................................................................................-->
+
+
+<template name="viewOtherProfile">
+
+{{#if currentUser}}
+
+{{#each viewOtherProfile}}
+
+<img style="width:70px;height:40px;" src="{{ProfilePic}}">
+
+<p>{{firstName}} {{lastName}} <a href="/sendEnquiry" class="sendEnquiry" id="sendEnquiry" style="color:rgba(150,200,100,.8);position:relative;left:20px;">Send message</a>
+</p>
+
+
+<p style="color:rgba(100,200,100,.8);font-family:papyrus">"{{Status}}"</p>
+
+
+{{/each}}
+
+{{#each viewOtherProfile}}
+
+ <script language="javascript">
+
+var currentuser=Meteor.userId();
+
+
+
+var profileOwnerId='{{UserId}}';
+console.log(profileOwnerId);
+if(currentuser==profileOwnerId)
+
+{
+var obj=document.getElementById('sendEnquiry');
+disableobject(obj);
+
+}
+
+
+ </script>
+{{/each}}
+
+
+
+<h3 style="color:rgba(100,200,100,.8);text-decoration:underline;"> Recent posts..</h3>
+
+{{#each viewOtherProfilePosts}}
+<p style="color:rgba(100,200,100,.8)">{{post}} <span style="color:rgba(100,200,100,.4);">posted on</span> <span style="color:rgba(100,200,100,.5);font-size:15px">{{createdAt}}</span></p>
+
+<a href="/comment" class="viewcomments" style="position:relative;left:10px;">View comments</a>
+{{/each}}
+
+<p><a  title="View all  posts" href="/otherAllPosts" style="text-decoration:underline;position:relative;left:25px;"> View all posts</a></p>
+
+
+<h3 style="color:rgba(100,200,100,.8);text-decoration:underline;">Host locations..</h3>
+
+
+
+{{#each viewOtherProfileHostLoc}}
+
+<p style="color: green"><b>{{HostLoc}}</b>  <span style="color:green;position:relative;left:15px;">Type of hosting offered:</span><span style="color:green;position:relative;left:18px;"><b>{{HostType}}</b></span> </p>
+
+<a href="/sendEnquiry" class="sendEnquiry" style="color:rgba(100,200,100,.8);position:relative;left:20px;">Send enquiry</a>
+
+{{/each}}
+<h3 style="color:rgba(100,200,100,.8);text-decoration:underline;">Guest requests..</h3>
+
+{{#each viewOtherProfileGuestLoc}}
+<p style="color: green;"><b>{{HostLoc}}</b>     <span style="color: green;position:relative;left:15px;">No. of people:</span><span style="color: green;position:relative;left:15px;"><b>{{Count}}</b></span> <span style="color: green;position:relative;left:25px;">Type of hosting looking for:</span><span style="color: green;position:relative;left:28px;"><b>{{HostType}}</b></span><span style="color: rgba(100,200,100,.4);;position:relative;left:35px;">Raised on:</span><span style="color: rgba(100,200,100,.5);font-size:15px;position:relative;left:35px;">{{createdAt}}</span> </p>
+
+<a href="/sendEnquiry" class="sendEnquiry" style="color:rgba(100,200,100,.8);position:relative;left:20px;">Send enquiry</a>
+
+
+{{/each}}
+
+<h3 style="color:rgba(100,200,100,.8);text-decoration:underline;"> Recent Blogs..</h3>
+
+{{#each viewOtherProfileBlogs}}
+
+<p><b>{{Heading}}</b></p>
+<p>{{Blog}}</p>
+
+
+{{/each}}
+
+<h3 style="color:rgba(100,200,100,.8);text-decoration:underline;"> Recent Comments..</h3>
+
+{{#each viewOtherProfileComments}}
+<p>Commented on {{#each otherCommentPost}} {{#each otherCommentPostOwner}}<span style="color:rgba(100,200,100,.5);font-size:15px;position:relative;left:10px;"><a style="color:rgba(100,200,100,.5);font-size:15px;" title="view profile" href="/viewOtherProfile" id="viewotherprofile" class="viewOtherProfile">{{firstName}} {{lastName}} 's</a></span>{{/each}} <span style="position:relative;left:10px;"> post</span><span style="color:lightgreen;position:relative;left:30px;"><a class="viewconversation" title="view full conversation" href="/comment" style="color:lightgreen;"> {{post}}</a></span>{{/each}}<span style="position:relative;left:60px;"> Comment:</span> <span style="color:lightgreen;position:relative;left:60px;">{{comment}}</span>
+ </p>
+
+
+
+{{/each}}
+
+<p><a  title="View all  comments" href="/otherAllComments" style="text-decoration:underline;position:relative;left:25px;"> View all comments</a></p>
+
+
+{{else}}
+<p>You must login to your account first. Don't have an account? Please sign up. It takes just a few seconds for you.</p>
+
+{{/if}}
+</template>
+
+
+
+<!--..................................View All Other Profile Posts Template......................................................................................................-->
+
+
+<template name="otherAllPosts">
+
+{{#if currentUser}}
+
+{{#each viewAllOtherProfilePosts}}
+
+<p style="color:rgba(100,200,100,.8)">{{post}} <span style="color:rgba(100,200,100,.4);">posted on</span> <span style="color:rgba(100,200,100,.5);font-size:15px">{{createdAt}}</span></p>
+<a href="/comment" class="viewcomments" style="position:relative;left:10px;">View comments</a> 
+
+
+
+{{/each}}
+{{else}}
+<p>You must login to your account first. Don't have an account? Please sign up. It takes just a few seconds for you.</p>
+
+{{/if}}
+
+</template>
+
+
+
+<!--................................View All Other Profile Comments Template......................................................................................................-->
+
+
+
+<template name="otherAllComments">
+
+{{#if currentUser}}
+
+{{#each viewAllOtherProfileComments}}
+
+<p>Commented on {{#each otherCommentPost}} {{#each otherCommentPostOwner}}<span style="color:rgba(100,200,100,.5);font-size:15px;position:relative;left:10px;"><a style="color:rgba(100,200,100,.5);font-size:15px;" title="view profile" href="/viewOtherProfile" id="viewotherprofile" class="viewOtherProfile">{{firstName}} {{lastName}} 's</a></span>{{/each}} <span style="position:relative;left:10px;"> post</span><span style="color:lightgreen;position:relative;left:30px;"><a class="viewconversation" title="view full conversation" href="/comment" style="color:lightgreen;"> {{post}}</a></span>{{/each}}<span style="position:relative;left:60px;"> Comment:</span> <span style="color:lightgreen;position:relative;left:60px;">{{comment}}</span>
+ </p>
+
+
+
+{{/each}}
+
+{{else}}
+<p>You must login to your account first. Don't have an account? Please sign up. It takes just a few seconds for you.</p>
+
+{{/if}}
+</template>
+
+
+
+<!--...........................................................Chat Template......................................................................................................-->
+
+
+
+
+<template name="chat">
+{{#if currentUser}}
+
+{{#each checkprofile}}
+
+<img style="width:70px;height:40px;" src="{{ProfilePic}}">
+
+
+{{/each}}
+
+
+<p id="newuser">You need to create your PathBuddy profile to start chatting with your Path buddies. Don't have one? Please  <a style="color:rgba(100,200,100,.8);text-decoration:underline;" href="/createProfile">create one</a></p>
+{{#each checkprofile}}
+
+
+
+<p><b>Your recent chats</b></p>
+
+{{#each recentchats}}
+
+<p style="position:relative;left:10px;">{{#each viewSender}}<a style="color:rgba(100,200,100,.8)" href="/chatWindow" class="chat"><b>{{firstName}} {{lastName}}:  </b></a>{{/each}}<span style="color:black;">{{Message}}</span> <span style="color:rgba(100,200,100,.4);position:relative;left:10px;">Sent to:</span>{{#each viewReceiver}}<span style="color:rgba(100,200,100,.8);position:relative;left:10px;"><a style="color:rgba(100,200,100,.8)" href="/chatWindow" class="chat"><b>{{firstName}} {{lastName}} </b></a></span>{{/each}}<span style="color:rgba(100,200,100,.4);position:relative;left:10px;">sent on:</span><span style="color:rgba(100,200,100,.5);font-size:15px;position:relative;left:10px;">{{TimeStamp}}</span></p>
+
+<div style="color:rgba(150,200,150,.3);">....................................................................................................................................................................................</div>
+{{/each}}
+<p style="position:relative;top:20px;"><b>Start chatting with your Path Buddies..</b></p><br /><br />
+
+{{#each viewcontacts}}
+
+<p><a style="color:rgba(100,200,100,.8)" href="/chatWindow" class="chat"><b>{{firstName}} {{lastName}}</b></a></p>
+
+
+
+{{/each}}
+
+{{/each}}
+
+{{#each checkprofile}}
+ <script language="javascript">
+var obj=document.getElementById('newuser');
+disableobject(obj);
+ </script>
+{{/each}}
+{{else}}
+<p>You must login to your account first. Don't have an account? Please sign up. It takes just a few seconds for you.</p>
+
+{{/if}}
+
+</template>
+
+
+
+<!--.................................................Chat Window Template......................................................................................................-->
+
+
+
+<template name="chatWindow">
+{{#if currentUser}}
+
+{{#each userinfo}}
+
+<img style="width:70px;height:40px;" src="{{ProfilePic}}">
+
+
+{{/each}}
+
+<form style="color:black;background-color:rgba(100,200,100,.8); width:470px;padding:10px 25px">
+<input type="textarea" style="width:400px; height:25px;" name="chatmessage" placeholder="type your message here">
+<input type="submit" value="send">
+</form><br />
+
+{{#each viewchats}}
+
+<p style="position:relative;left:10px;">{{#each viewSender}}<b>{{firstName}}:  </b>{{/each}}{{Message}} <span style="color:rgba(100,200,100,.4);position:relative;left:10px;">sent on:</span><span style="color:rgba(100,200,100,.5);font-size:15px;position:relative;left:10px;">{{TimeStamp}}</span></p>
+
+<div style="color:rgba(150,200,150,.3);">....................................................................................................................................................................................</div>
+{{/each}}
+
+
+{{else}}
+<p>You must login to your account first. Don't have an account? Please sign up. It takes just a few seconds for you.</p>
+
+{{/if}}
+
+</template>
+
+
+<!--.................................................travelBlogs Template......................................................................................................-->
+
+
+
+<template name="travelBlogs">
+
+{{#if currentUser}}
+
+{{#each userinfo}}
+
+<img style="width:70px;height:40px;" src="{{ProfilePic}}">
+
+
+{{/each}}
+
+<p>Write your travel blog and let the fellow path buddies know about your amazing experiences. <a style="text-decoration:underline;color:rgba(100,200,100,.5)" href="/viewBlogs">Check out the cool blogs written by your Path Buddies here</a></p>
+<form action="form_action.asp" accept="image/gif,image/jpeg" style="color:black;background-color:rgba(100,200,100,.8);padding:10px 25px">
+
+<p style="position:relative;left:370px;">Heading:  <input type="text" style="width:200px;" name="blogheading" maxlength="60" placeholder="Your blog's heading" required></p><br />
+
+<p style="position:relative;left:300px;"><input type="textarea" style="width:500px; height:400px;" name="travelblog" placeholder="share your experiences here." required></p><br /><br />
+<p style="position:relative;left:220px;">First name: <input type="text" style="width:200px;" name="bloggerFirstName" maxlength="30" placeholder="Maximum 30 characters" required>
+<span style="position:relative;left:20px;">Last name: <input type="text" style="width:200px;" name="bloggerLastName" maxlength="30" placeholder="Maximum 30 characters" required></span></p><br />
+<p style="position:relative;left:420px;">Email: <input type="email" style="width:200px;" name="bloggerEmail" maxlength="50" placeholder="Maximum 50 characters" required></p><br />
+<p style="position:relative;left:170px;"><input class="submit_blog" style="background-color:rgba(150,150,130);position:relative;left:350px" type="submit" value="Post"></p>
+</form>
+
+{{else}}
+<p>You must login to your account first. Don't have an account? Please sign up. It takes just a few seconds for you.</p>
+
+{{/if}}
+</template>
+
+
+<!--...................................................View Blogs Template......................................................................................................-->
+
+
+
+<template name="viewBlogs">
+
+
+{{#if currentUser}}
+
+{{#each userinfo}}
+
+<img style="width:70px;height:40px;" src="{{ProfilePic}}">
+
+
+{{/each}}
+
+{{#each viewblogs}}
+
+<p><b>{{Heading}}</b> written by<span style="color:rgba(100,200,100,.5);font-size:15px;position:relative;left:10px;"> {{firstName}} {{lastName}}</span></p>
+<p>{{Blog}}</p>
+
+
+  <a href="/blogComment" style="color:black;position:relative;left:20px" class="blogcomment">Comment</a>
+
+
+
+<div style="color:rgba(150,200,150,.3);">....................................................................................................................................................................................</div>
+
+
+{{/each}}
+
+{{else}}
+<p>You must login to your account first. Don't have an account? Please sign up. It takes just a few seconds for you.</p>
+
+{{/if}}
+</template>
+
+
+<!--...................................................BlogComment Template......................................................................................................-->
+
+
+
+<template name="blogComment">
+
+
+{{#if currentUser}}
+
+{{#each userinfo}}
+
+<img style="width:70px;height:40px;" src="{{ProfilePic}}">
+
+
+{{/each}}
+
+ <a href="/viewBlogs" style="color:rgb(150,220,150);position:relative;left:450px;top:-35px" >Go back to the Blogs</a>
+
+{{#each blogview}}
+<p><b>{{Heading}}</b> written by<span style="color:rgba(100,200,100,.5);font-size:15px;position:relative;left:10px;"> {{firstName}} {{lastName}}</span></p>
+<p>{{Blog}}</p>
+
+{{/each}}
+
+
+
+<form>
+<input type="textarea" style="width:200px;height:100px;position:relative;left:100px" name="commentcontent" placeholder="Write your comment here">
+<input class="new-comment" style="position:relative;left:100px" type="submit" value="Comment">
+</form>
+{{#each commentvalue}}
+ 
+   <p>{{comment}}..by <span style="color:rgba(100,200,100,.5);font-size:15px">{{#each showname}}<a style="color:rgba(100,200,100,.9);" href="/viewOtherProfile" class="viewOtherProfile"> {{firstName}}  {{lastName}} </a>{{/each}}</span><span style="color:rgba(100,200,100,.4);position:relative;left:10px;">posted on:</span><span style="color:rgba(100,200,100,.5);font-size:15px;position:relative;left:10px;">{{createdAt}}</span></p>
+
+
+{{/each}}
+{{else}}
+<p>You must login to your account first. Don't have an account? Please sign up. It takes just a few seconds for you.</p>
+
+
+{{/if}}
+
+</template>
+
