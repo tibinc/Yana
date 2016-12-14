@@ -1,2 +1,2 @@
 # Yana
-A hangout place and utility website for those who love travelling around. 
+A hangout place and utility app for those who love travelling around. 
